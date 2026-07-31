@@ -1,0 +1,18 @@
+13. Perform Perspective Transformation on the Video.
+import cv2
+import numpy as np
+cap = cv2.VideoCapture("video.mp4")
+while True:
+    ret, frame = cap.read()
+    if not ret:
+        break
+    rows, cols = frame.shape[:2]
+    p1 = np.float32([[0,0],[300,0],[0,300],[300,300]])
+    p2 = np.float32([[50,50],[250,50],[100,250],[250,250]])
+    matrix = cv2.getPerspectiveTransform(p1,p2)
+    output = cv2.warpPerspective(frame,matrix,(cols,rows))
+    cv2.imshow("Video", output)
+    if cv2.waitKey(1)==ord('q'):
+        break
+cap.release()
+cv2.destroyAllWindows()
